@@ -12,17 +12,20 @@ var memeImage;
 //Event Handlers
 memeFile.change(function(event){
     event.preventDefault();
+    
     //clear inputs everytime we load new meme
     $('input[type=text]').val("");
+    
     //When ever we select a file, change event fires on (input type=file)
     var file = event.target.files[0];
-
+    
+    // file-type error checking
     if(file.type.search("image")== -1){
        return error.show("fast");
       }
-    error.hide("fast"); 
+    error.hide("fast");
+     
     reader = new FileReader();
-    
     reader.onload = function(event){
       var image = new Image();
       image.src = event.target.result;
@@ -43,10 +46,18 @@ bottomText.keyup(function(){
   setText();
 });
 
+//Simulate File button via Image
 $("#upfile").click(function () {
     $("#memeFile").trigger('click');
 });
 
+$("#upfile").mousedown(function(){
+  $(this).css("top","1px");
+});
+
+$("#upfile").mouseup(function(){
+  $(this).css("top","0px");
+});
 
 //Primary Functions
 function setText(){
@@ -64,6 +75,8 @@ function createThumbnail(img){
   //create new Image object since we can't modify the orginal one
   var thumb = new Image();
   thumb.src = img.src;
+  thumb.id = "thumb";
+  //thumb.style.boxShadow = "0px 0px 3px 0px rgba(0, 152, 219, 0.80)";
 
   var h = thumb.height;
   var w = thumb.width;
@@ -120,8 +133,4 @@ function generateMemeText(text){
       
       ctx.fillText(text[1],(memeCanvas.width)/2, (memeCanvas.height-15));
       ctx.strokeText(text[1],(memeCanvas.width)/2, (memeCanvas.height-15));
-}
-
-function manageError(){
-  
 }
