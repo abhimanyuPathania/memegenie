@@ -20,8 +20,10 @@ memeFile.change(function(event){
     reader.onload = function(event){
       var image = new Image();
       image.src = event.target.result;
-      //draw the image on canvas and save a copy in memeImage Global var
+      //draw the image on canvas, add thumbnail and
+      // save a copy in memeImage Global var
       memeImage = image;
+      createThumbnail(image);
       createCanvas(image);
      };
     reader.readAsDataURL(file);
@@ -39,6 +41,7 @@ $("#upfile").click(function () {
     $("#memeFile").trigger('click');
 });
 
+
 //Primary Functions
 function setText(){
   // Get both, top and bottom, text values and pass to generateMemeText
@@ -47,6 +50,28 @@ function setText(){
   memeText[1] = bottomText.val();
   createCanvas(memeImage); // redraw meme everytime you type
   generateMemeText(memeText);
+}
+
+function createThumbnail(img){
+  $('#imageThumbnail').empty();
+  //create new Image object since we can't modify the orginal one
+  var thumb = new Image();
+  thumb.src = img.src;
+
+  var h = thumb.height;
+  var w = thumb.width;
+  var scaling;
+  
+  if(h<=100){
+    if(w>150){
+      thumb.width = 150;
+    }
+  }
+  else{
+    scaling = h/100;
+    thumb.width = w/scaling;
+  }
+  $('#imageThumbnail').append(thumb);
 }
 
 function createCanvas(img){
@@ -60,6 +85,7 @@ function createCanvas(img){
   memeCanvas.height = img.height;
   ctx.drawImage(img, 0, 0);
 }
+
 
 function generateMemeText(text){
   var ctx = memeCanvas.getContext("2d");
