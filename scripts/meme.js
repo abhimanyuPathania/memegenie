@@ -23,8 +23,8 @@ memeFile.change(function(event){
       //draw the image on canvas, add thumbnail and
       // save a copy in memeImage Global var
       memeImage = image;
-      createThumbnail(image);
-      createCanvas(image);
+      createThumbnail(memeImage);
+      createCanvas(memeImage);
      };
     reader.readAsDataURL(file);
  });
@@ -75,28 +75,42 @@ function createThumbnail(img){
 }
 
 function createCanvas(img){
+  
   if(!memeImage)return false; //if text is tried to set before loading meme
+  var scaling;
+  var w = img.width;
+  var h = img.height;
   var ctx = memeCanvas.getContext("2d");
+  
   if(memeCanvas.width != 0){
     //already drawn an image so clear whole canvas                                  
     ctx.clearRect(0, 0, memeCanvas.width, memeCanvas.height); 
   }
+  
+  if(w > 880){
+    img.width = 880;
+    scaling = w/880;
+    img.height = h/scaling;
+  }
+  
   memeCanvas.width = img.width;
   memeCanvas.height = img.height;
   ctx.drawImage(img, 0, 0);
+  $('#saveMessage').text("Right click on the image to save it...");
 }
 
 
 function generateMemeText(text){
   var ctx = memeCanvas.getContext("2d");
       ctx.fillStyle = "white";
-      ctx.font = "36pt Impact";
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = "black";
+      ctx.font = "30pt Impact";
+      ctx.lineWidth = 2;
       ctx.textAlign = "center";
   
-      ctx.fillText(text[0],(memeCanvas.width)/2, 50);
-      ctx.strokeText(text[0],(memeCanvas.width)/2, 50);
+      ctx.fillText(text[0],(memeCanvas.width)/2, 45);
+      ctx.strokeText(text[0],(memeCanvas.width)/2, 45);
       
-      ctx.fillText(text[1],(memeCanvas.width)/2, (memeCanvas.height-10));
-      ctx.strokeText(text[1],(memeCanvas.width)/2, (memeCanvas.height-10));
+      ctx.fillText(text[1],(memeCanvas.width)/2, (memeCanvas.height-15));
+      ctx.strokeText(text[1],(memeCanvas.width)/2, (memeCanvas.height-15));
 }

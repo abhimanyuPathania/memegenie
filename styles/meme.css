@@ -9,9 +9,20 @@ body{
 
 
 #main{
-	max-width: 800px;
+	max-width: 900px;
 	margin: 20px auto;
-	border: 1px solid #505050;
+	border: 1px solid #3498DB;
+	
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	
+	box-shadow: 0px 0px 5px 1px rgba(0, 152, 219, 0.5);
+}
+
+#main h1{
+	margin-left: 40px;
+	text-shadow: 0px 0px 3px rgba(80, 80, 80, 0.6);
 }
 
 input{
@@ -20,7 +31,8 @@ input{
 }
 
 #textInputs{
-	margin: 10px 0;
+	width:786px;
+	margin: 20px auto;
 }
 
 #textInputs input{
@@ -47,8 +59,8 @@ input{
 	box-shadow: 0px 0px 3px 0px rgba(0, 152, 219, 0.80);
 }
 
-#textInputs label{
-	margin-left: 4px;
+label:nth-child(3){
+	margin-left: 10px;
 }
 
 #fileInput{
@@ -67,5 +79,8 @@ input{
 canvas{
 	display:block;
 	margin: 10px auto;
-	border: 1px solid #505050;
+}
+
+#saveMessage{
+	margin-left: 40px;
 }
