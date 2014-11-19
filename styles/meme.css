@@ -5,26 +5,35 @@ body{
 	margin: 0;
 	font-family: Helvetica, sans-serif, Arial;
 	color: #505050;
+	background: url(../images/memeGene_background.png);
 }
 
 
 #main{
+	opacity:1;
 	max-width: 900px;
 	margin: 20px auto;
 	border: 1px solid #3498DB;
-	
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
 	border-radius: 20px;
-	
 	box-shadow: 0px 0px 5px 1px rgba(0, 152, 219, 0.5);
+	background-color: rgba(248,248,248,0.9);	
 }
+
 
 #main h1{
 	margin-left: 40px;
 	text-shadow: 0px 0px 3px rgba(80, 80, 80, 0.6);
+	display: inline-block;
 }
 
+.error{
+	display:none;
+	margin-left: 145px;
+	color: #e74c3c;
+	text-shadow: 0px 0px 1px rgba(231, 76, 60, 0.4);
+}
 input{
 	  -webkit-appearance:none;
     -moz-appearance:none;
@@ -66,7 +75,6 @@ label:nth-child(3){
 #fileInput{
 	width: 600px;
 	margin: 10px auto;
-	border: 1px solid #505050;
 }
 
 #imageThumbnail{
@@ -74,7 +82,6 @@ label:nth-child(3){
 	float:right;
 	max-width:	150px;
 	max-height: 100px;
-	border: 1px solid #505050;
 }
 canvas{
 	display:block;

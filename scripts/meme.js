@@ -5,6 +5,7 @@ var meme = $('#meme');
 var memeCanvas = $('#c').get(0);
 var topText = $('#topText');
 var bottomText = $('#bottomText');
+var error = $('.error');
 var memeText = [];
 var memeImage;
 
@@ -14,7 +15,12 @@ memeFile.change(function(event){
     //clear inputs everytime we load new meme
     $('input[type=text]').val("");
     //When ever we select a file, change event fires on (input type=file)
-    var file = event.target.files[0]; 
+    var file = event.target.files[0];
+
+    if(file.type.search("image")== -1){
+       return error.show("fast");
+      }
+    error.hide("fast"); 
     reader = new FileReader();
     
     reader.onload = function(event){
@@ -53,6 +59,7 @@ function setText(){
 }
 
 function createThumbnail(img){
+  if(!img)return false;
   $('#imageThumbnail').empty();
   //create new Image object since we can't modify the orginal one
   var thumb = new Image();
@@ -113,4 +120,8 @@ function generateMemeText(text){
       
       ctx.fillText(text[1],(memeCanvas.width)/2, (memeCanvas.height-15));
       ctx.strokeText(text[1],(memeCanvas.width)/2, (memeCanvas.height-15));
+}
+
+function manageError(){
+  
 }
