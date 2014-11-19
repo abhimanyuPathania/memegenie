@@ -1,1 +1,71 @@
 /* meme.css */
+
+body{
+	padding: 0;
+	margin: 0;
+	font-family: Helvetica, sans-serif, Arial;
+	color: #505050;
+}
+
+
+#main{
+	max-width: 800px;
+	margin: 20px auto;
+	border: 1px solid #505050;
+}
+
+input{
+	  -webkit-appearance:none;
+    -moz-appearance:none;
+}
+
+#textInputs{
+	margin: 10px 0;
+}
+
+#textInputs input{
+	width: 300px;
+	height: 50px;
+	outline:none;
+	border: 1px solid #3498db;
+	
+	font-size:1.3em;
+	color: #707070;
+	font-weight:100;
+	text-align:center;
+	
+	-webkit-border-radius: 60px;
+	-webkit-border-bottom-right-radius: 0;
+	-moz-border-radius: 60px;
+	-moz-border-radius-bottomright: 0;
+	border-radius: 60px;
+	border-bottom-right-radius: 0;
+
+}
+
+#textInputs input:focus{
+	box-shadow: 0px 0px 3px 0px rgba(0, 152, 219, 0.80);
+}
+
+#textInputs label{
+	margin-left: 4px;
+}
+
+#fileInput{
+	width: 600px;
+	margin: 10px auto;
+	border: 1px solid #505050;
+}
+
+#imageThumbnail{
+	display: inline-block;
+	float:right;
+	width:	150px;
+	height: 100px;
+	border: 1px solid #505050;
+}
+canvas{
+	display:block;
+	margin: 10px auto;
+	border: 1px solid #505050;
+}

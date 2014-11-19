@@ -35,6 +35,10 @@ bottomText.keyup(function(){
   setText();
 });
 
+$("#upfile").click(function () {
+    $("#memeFile").trigger('click');
+});
+
 //Primary Functions
 function setText(){
   // Get both, top and bottom, text values and pass to generateMemeText

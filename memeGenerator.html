@@ -3,16 +3,29 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>memeGene</title>
+		<link rel="stylesheet" href="styles/meme.css" media="screen" />
 	</head>
 	<body>
 		<div id="main">
 			<h1>Make some quick memes!</h1>
 			
 			<div id="memeInput">
-				<input type="file" id="memeFile"/>
-				<input type="text" id="topText"/>
-				<input type="text" id="bottomText"/>
+				
+				<div id="fileInput">
+					<img src="images/file_background.png" id="upfile"/>
+					<input type="file" id="memeFile" style="display: none" />
+					<div id="imageThumbnail"></div>
+				</div><!----- End fileInput ----------------->
+				
+				<div id="textInputs">
+					<label for="topText">Top Text:</label>
+					<input type="text" id="topText"/>
+					<label for="bottomText">Bottom Text:</label>
+					<input type="text" id="bottomText"/>
+				</div><!----- End textInputs ----------------->
+				
 			</div><!----- End memeInput ----------------->
+			
 			<div id="meme">
 				<canvas id="c" width="0" height="0"></canvas>
 				<p>Save the image and have fun!!</p>
