@@ -9,12 +9,10 @@ var bottomText = $('#bottomText');
 var error = $('.error');
 
 var ctx = memeCanvas.getContext("2d");
-var memeText = [];
+var memeText = {};
 var memeImage;
 var maxWidth;
 var lineHeight;
-
-
 
 //Event Handlers
 memeFile.change(function(event){
@@ -72,14 +70,14 @@ function setText(){
   if(!memeImage) return false;
   // Get both, top and bottom, text values and pass to generateMemeText
 
-  memeText[0] = topText.val();
-  memeText[1] = bottomText.val();
+  memeText.top = topText.val();
+  memeText.bottom = bottomText.val();
   
   // redraw meme everytime you type
   createCanvas(memeImage); 
         
-  generateTopText(memeText[0]);
-  generateBottomText(memeText[1]);
+  generateTopText(memeText.top);
+  generateBottomText(memeText.bottom);
 }
 
 function createThumbnail(img){
@@ -89,7 +87,6 @@ function createThumbnail(img){
   var thumb = new Image();
   thumb.src = img.src;
   thumb.id = "thumb";
-  //thumb.style.boxShadow = "0px 0px 3px 0px rgba(0, 152, 219, 0.80)";
 
   var h = thumb.height;
   var w = thumb.width;
@@ -146,70 +143,58 @@ function createCanvas(img){
 
 
 function generateTopText(text){
-    wrapTextTop(text,(memeCanvas.width)/2, 45, maxWidth, lineHeight);
+   wrapText(text,(memeCanvas.width)/2, 45, maxWidth, lineHeight);
 }
 
 function generateBottomText(text){
-   wrapTextBottom(text,(memeCanvas.width)/2, (memeCanvas.height-15), maxWidth, lineHeight);  
+  // call the same wrapText with bottom true parameter
+   wrapText(text,(memeCanvas.width)/2, (memeCanvas.height-15), maxWidth, lineHeight, true);  
 }
 
 
-function wrapTextBottom(text, x, y, maxWidth, lineHeight) {
+function wrapText(text, x, y, maxWidth, lineHeight, bottom) {
         if(text.length==0)return false;
+        
         var words = text.split(' ');
         var line = '';
-        var linesArray = [];
+        var linesArray =[];
  
         for(var n = 0; n < words.length; n++) {
           var testLine = line + words[n] + ' ';
-
           var metrics = ctx.measureText(testLine);
           var testWidth = metrics.width;
-
-          if (testWidth > maxWidth) {
-            
-            linesArray.push(line);
-            createCanvas(memeImage);
-            generateTopText(memeText[0]);
-            for(var i=0, len = linesArray.length; i<len; i++){
-
-              ctx.fillText(linesArray[i], x, (y-(len-(i))*lineHeight));
-              ctx.strokeText(linesArray[i], x, (y-(len-(i))*lineHeight));
+          
+          //Bottom text case
+          if(bottom === true){
+                if (testWidth > maxWidth) {
+                    linesArray.push(line);
+                    createCanvas(memeImage);
+                    generateTopText(memeText.top);
+                    for(var i=0, len = linesArray.length; i<len; i++){
+      
+                     ctx.fillText(linesArray[i], x, (y-(len-(i))*lineHeight));
+                     ctx.strokeText(linesArray[i], x, (y-(len-(i))*lineHeight));
+                  }
+                  line = words[n] + ' ';
+              }
+               else {
+                 line = testLine;
+              }
+          }// End Bottom text case
+          
+          // Top Text case
+          else{
+              if (testWidth > maxWidth) {
+                ctx.fillText(line, x, y);
+                ctx.strokeText(line, x, y);
+                line = words[n] + ' ';
+                y += lineHeight;
             }
-
-            line = words[n] + ' ';
-          }
-          else {
-            line = testLine;
-          }
-        }
+            else {
+              line = testLine;
+            }
+         }// End Top text case
+       }// End For loop
         ctx.fillText(line, x, y);
         ctx.strokeText(line, x, y);
      }
-
-function wrapTextTop(text, x, y, maxWidth, lineHeight) {
-        if(text.length==0)return false;
-        var words = text.split(' ');
-        var line = '';
-
-        for(var n = 0; n < words.length; n++) {
-          var testLine = line + words[n] + ' ';
-
-          var metrics = ctx.measureText(testLine);
-          var testWidth = metrics.width;
- 
-          if (testWidth > maxWidth) {
-            ctx.fillText(line, x, y);
-            ctx.strokeText(line, x, y);
-            line = words[n] + ' ';
-            y += lineHeight;
-          }
-          else {
-            line = testLine;
-          }
-        }
-        ctx.fillText(line, x, y);
-        ctx.strokeText(line, x, y);
-     }
-     
-     
