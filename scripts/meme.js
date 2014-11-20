@@ -68,7 +68,8 @@ function setText(){
   memeText[0] = topText.val();
   memeText[1] = bottomText.val();
   createCanvas(memeImage); // redraw meme everytime you type
-  generateMemeText(memeText);
+  generateTopText(memeText[0]);
+  generateBottomText(memeText[1]);
 }
 
 function createThumbnail(img){
@@ -123,7 +124,7 @@ function createCanvas(img){
 }
 
 
-function generateMemeText(text){
+function generateTopText(text){
    var maxWidth = (memeCanvas.width-30);
    var lineHeight = 40;
       ctx.fillStyle = "white";
@@ -132,14 +133,33 @@ function generateMemeText(text){
       ctx.lineWidth = 2;
       ctx.textAlign = "center";
   
-      wrapTextTop(text[0],(memeCanvas.width)/2, 45, maxWidth, lineHeight);
+      wrapTextTop(text,(memeCanvas.width)/2, 45, maxWidth, lineHeight);
       
-      wrapTextBottom(text[1],(memeCanvas.width)/2, (memeCanvas.height-15), maxWidth, lineHeight);  
+      //wrapTextBottom(text[1],(memeCanvas.width)/2, (memeCanvas.height-15), maxWidth, lineHeight);  
 
       
       //ctx.fillText(text[1],(memeCanvas.width)/2, (memeCanvas.height-15));
       //ctx.strokeText(text[1],(memeCanvas.width)/2, (memeCanvas.height-15));
 }
+
+function generateBottomText(text){
+   var maxWidth = (memeCanvas.width-30);
+   var lineHeight = 40;
+      ctx.fillStyle = "white";
+      ctx.strokeStyle = "black";
+      ctx.font = "30pt Impact";
+      ctx.lineWidth = 2;
+      ctx.textAlign = "center";
+  
+      //wrapTextTop(text,(memeCanvas.width)/2, 45, maxWidth, lineHeight);
+      
+      wrapTextBottom(text,(memeCanvas.width)/2, (memeCanvas.height-15), maxWidth, lineHeight);  
+
+      
+      //ctx.fillText(text[1],(memeCanvas.width)/2, (memeCanvas.height-15));
+      //ctx.strokeText(text[1],(memeCanvas.width)/2, (memeCanvas.height-15));
+}
+
 
 function wrapTextBottom(text, x, y, maxWidth, lineHeight) {
         if(text.length==0)return false;
@@ -160,8 +180,10 @@ function wrapTextBottom(text, x, y, maxWidth, lineHeight) {
           if (testWidth > maxWidth) {
             
             linesArray.push(line);
+            createCanvas(memeImage);
+            generateTopText(memeText[0]);
             for(var i=0, len = linesArray.length; i<len; i++){
-              createCanvas(memeImage);
+
               ctx.fillText(linesArray[i], x, (y-(len-(i))*lineHeight));
               ctx.strokeText(linesArray[i], x, (y-(len-(i))*lineHeight));
             }
