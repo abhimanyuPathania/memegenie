@@ -48,7 +48,7 @@ input{
 }
 
 #textInputs{
-	width:786px;
+	max-width:790px;
 	margin: 20px auto;
 }
 
