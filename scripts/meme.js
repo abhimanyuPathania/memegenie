@@ -7,6 +7,8 @@ var memeCanvas = $('#c').get(0);
 var topText = $('#topText');
 var bottomText = $('#bottomText');
 var error = $('.error');
+var fileButtonImage = $("#upfile");
+var imageThumbnail = $('#imageThumbnail');
 
 var ctx = memeCanvas.getContext("2d");
 var memeText = {};
@@ -19,8 +21,8 @@ memeFile.change(function(event){
     event.preventDefault();
     
     //clear inputs everytime we load new meme
-    $('input[type=text]').val("");
-    
+    topText.val("");
+    bottomText.val("");
     //When ever we select a file, change event fires on (input type=file)
     var file = event.target.files[0];
     
@@ -35,8 +37,8 @@ memeFile.change(function(event){
     reader.onload = function(event){
       var image = new Image();
       image.src = event.target.result;
-      //draw the image on canvas, add thumbnail and
-      // save a copy in memeImage Global var
+      
+      // pass it to global variable
       memeImage = image;
       createThumbnail(memeImage);
       createCanvas(memeImage);
@@ -44,31 +46,32 @@ memeFile.change(function(event){
     reader.readAsDataURL(file);
  });
 
-topText.keyup(function(){
-  setText();
-});
+  topText.keyup(function(){
+    setText();
+  });
 
-bottomText.keyup(function(){
-  setText();
-});
-
-//Simulate File button via Image
-$("#upfile").click(function () {
-    $("#memeFile").trigger('click');
-});
-
-$("#upfile").mousedown(function(){
-  $(this).css("top","1px");
-});
-
-$("#upfile").mouseup(function(){
-  $(this).css("top","0px");
-});
+  bottomText.keyup(function(){
+    setText();
+  });
+  
+  //Simulate File button via Image
+  fileButtonImage.click(function () {
+      memeFile.trigger('click');
+  });
+  
+  fileButtonImage.mousedown(function(){
+    $(this).css("top","1px");
+  });
+  
+  fileButtonImage.mouseup(function(){
+    $(this).css("top","0px");
+  });
 
 //Primary Functions
 function setText(){
   if(!memeImage) return false;
-  // Get both, top and bottom, text values and pass to generateMemeText
+  // Get both, top and bottom, text values and pass to
+  // generateTopText and generateBottomText respectively.
 
   memeText.top = topText.val();
   memeText.bottom = bottomText.val();
@@ -82,7 +85,7 @@ function setText(){
 
 function createThumbnail(img){
   if(!img)return false;
-  $('#imageThumbnail').empty();
+  imageThumbnail.empty();
   //create new Image object since we can't modify the orginal one
   var thumb = new Image();
   thumb.src = img.src;
@@ -101,7 +104,7 @@ function createThumbnail(img){
     scaling = h/100;
     thumb.width = w/scaling;
   }
-  $('#imageThumbnail').append(thumb);
+  imageThumbnail.append(thumb);
 }
 function setContextSettings(){
       
@@ -147,7 +150,7 @@ function generateTopText(text){
 }
 
 function generateBottomText(text){
-  // call the same wrapText with bottom true parameter
+  // call the same wrapText with bottom=true parameter
    wrapText(text,(memeCanvas.width)/2, (memeCanvas.height-15), maxWidth, lineHeight, true);  
 }
 
