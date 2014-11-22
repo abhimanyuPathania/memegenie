@@ -34,14 +34,19 @@ memeFile.change(function(event){
     error.hide("fast");
      
     reader = new FileReader();
-    reader.onload = function(event){
+    reader.onloadend = function(event){
       var image = new Image();
       image.src = event.target.result;
       
       // pass it to global variable
-      memeImage = image;
+      image.onload = function(){
+        memeImage = this;
+        createThumbnail(memeImage);
+        createCanvas(memeImage);
+      };
+      /*memeImage = image;
       createThumbnail(memeImage);
-      createCanvas(memeImage);
+      createCanvas(memeImage);*/
      };
     reader.readAsDataURL(file);
  });
