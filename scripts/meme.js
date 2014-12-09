@@ -44,9 +44,6 @@ memeFile.change(function(event){
         createThumbnail(memeImage);
         createCanvas(memeImage);
       };
-      /*memeImage = image;
-      createThumbnail(memeImage);
-      createCanvas(memeImage);*/
      };
     reader.readAsDataURL(file);
  });
