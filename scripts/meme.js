@@ -1,4 +1,3 @@
-
 // Globals
 
 var memeFile = $('#memeFile');
@@ -8,13 +7,18 @@ var topText = $('#topText');
 var bottomText = $('#bottomText');
 var error = $('.error');
 var fileButtonImage = $("#upfile");
-var imageThumbnail = $('#imageThumbnail');
+var thumbnail = $("#thumb")
+var fileInputDiv = $("#fileInput")
 
 var ctx = memeCanvas.getContext("2d");
 var memeText = {};
 var memeImage;
 var maxWidth;
 var lineHeight;
+
+var imageResizeWidthLimit
+var imageResizeHeightLimit
+var imageResizeBlocker
 
 //Event Handlers
 memeFile.change(function(event){
@@ -41,6 +45,8 @@ memeFile.change(function(event){
       // pass it to global variable
       image.onload = function(){
         memeImage = this;
+        setupResizing(memeImage);
+        checkScreenSize(memeImage);
         createThumbnail(memeImage);
         createCanvas(memeImage);
       };
@@ -61,13 +67,13 @@ memeFile.change(function(event){
       memeFile.trigger('click');
   });
   
-  fileButtonImage.mousedown(function(){
+  /*fileButtonImage.mousedown(function(){
     $(this).css("top","1px");
   });
   
   fileButtonImage.mouseup(function(){
     $(this).css("top","0px");
-  });
+  });*/
 
 //Primary Functions
 function setText(){
@@ -86,28 +92,21 @@ function setText(){
 }
 
 function createThumbnail(img){
-  if(!img)return false;
-  imageThumbnail.empty();
+  if(!img) return false;
+   if(thumbnail){
+    thumbnail.remove();
+  }
   //create new Image object since we can't modify the orginal one
   var thumb = new Image();
   thumb.src = img.src;
   thumb.id = "thumb";
 
-  var h = thumb.height;
-  var w = thumb.width;
-  var scaling;
-  
-  if(h<=100){
-    if(w>150){
-      thumb.width = 150;
-    }
-  }
-  else{
-    scaling = h/100;
-    thumb.width = w/scaling;
-  }
-  imageThumbnail.append(thumb);
+  scaleImage(thumb,false,100)
+ 
+  fileInputDiv.append(thumb);
+  thumbnail = thumb;
 }
+
 function setContextSettings(){
       
       ctx.fillStyle = "white";
@@ -124,19 +123,15 @@ function createCanvas(img){
   
   //if text is tried to set before loading meme
   if(!memeImage)return false; 
-  var scaling;
   var w = img.width;
-  var h = img.height;
 
   if(memeCanvas.width != 0){
     //already drawn an image so clear whole canvas                                  
     ctx.clearRect(0, 0, memeCanvas.width, memeCanvas.height); 
   }
   
-  if(w > 880){
-    img.width = 880;
-    scaling = w/880;
-    img.height = h/scaling;
+  if(w > 820){
+    scaleImage(img,820,false);
   }
   
   memeCanvas.width = img.width;
@@ -203,3 +198,59 @@ function wrapText(text, x, y, maxWidth, lineHeight, bottom) {
         ctx.fillText(line, x, y);
         ctx.strokeText(line, x, y);
      }
+
+$(window).resize(function (){
+  var width = $("#main").width()
+  if (width<900){
+    if (memeImage){
+      var expectedImageWidth = width;
+      if(imageResizeBlocker && expectedImageWidth > imageResizeWidthLimit){
+        memeImage.width = imageResizeWidthLimit;
+        memeImage.height = imageResizeHeightLimit;
+        setText();//to fix image once before it returns
+        return false;
+      }
+      console.log("Scaling image")
+      console.log("main width: "+ width + "px")
+      scaleImage(memeImage,expectedImageWidth,false)
+      setText();
+    }
+  }
+});
+
+function setupResizing(img){
+  var width = img.width;
+  if(width<820){
+    imageResizeBlocker = true;
+    imageResizeWidthLimit = width;
+    imageResizeHeightLimit = img.height;
+  }
+  else{
+    imageResizeBlocker = false;
+  }
+}
+
+function checkScreenSize(img){
+  var width = $("#main").width();
+  if(width<818){
+    scaleImage(memeImage,width,false)
+  }
+}
+
+function scaleImage(img,requiredWidth,requiredHeight){
+  var scaling
+  var w = img.width;
+  var h = img.height;
+
+  if(!requiredHeight){
+    scaling = w/requiredWidth;
+    img.width = requiredWidth;
+    img.height = h/scaling;
+  }
+  if(!requiredWidth){
+    scaling = h/requiredHeight;
+    img.height = requiredHeight;
+    img.width = w/scaling
+  }
+  return false; 
+}

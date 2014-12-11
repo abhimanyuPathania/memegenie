@@ -8,27 +8,31 @@
 	</head>
 	<body>
 		<div id="main">
-			<h1>memeGene</h1>
-			<span class="error">Please select an image file!</span>
+			<div id="title">
+				<h1>memeGene</h1>
+				<span class="error">Please select an image file!</span>
+			</div>
 			<div id="memeInput">
 				
 				<div id="fileInput">
 					<img src="images/button.png" id="upfile"/>
 					<input type="file" id="memeFile" style="display: none" />
-					<div id="imageThumbnail"></div>
 				</div><!-- End fileInput -->
 				
 				<div id="textInputs">
-					<label for="topText">Top Text:</label>
-					<input type="text" id="topText"/>
-					<label for="bottomText">Bottom Text:</label>
-					<input type="text" id="bottomText"/>
+					<div class="form-field">
+						<label for="topText">Top Text:</label>
+						<div><input type="text" id="topText"/></div>
+					</div>
+					<div class="form-field">
+						<label for="bottomText">Bottom Text:</label>
+						<div><input type="text" id="bottomText"/></div>
+					</div>
 				</div><!-- End textInputs -->
-				
 			</div><!-- End memeInput -->
 			
 			<div id="meme">
-				<canvas id="c" width="0" height="0"></canvas>
+				<canvas id="c" height="0"></canvas>
 				<p id="saveMessage"></p>
 			</div>
 		</div><!-- End main -->
