@@ -120,6 +120,7 @@ canvas{
 	body{
 		font-size: 15px;
 		margin:10px;
+		background: url(../images/memeGene_background_401.png);
 	}
 	.error{
 		font-size: 0.85em;

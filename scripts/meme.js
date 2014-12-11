@@ -7,7 +7,6 @@ var topText = $('#topText');
 var bottomText = $('#bottomText');
 var error = $('.error');
 var fileButtonImage = $("#upfile");
-var thumbnail = $("#thumb")
 var fileInputDiv = $("#fileInput")
 
 var ctx = memeCanvas.getContext("2d");
@@ -20,7 +19,6 @@ var imageResizeWidthLimit
 var imageResizeHeightLimit
 var imageResizeBlocker
 
-//alert("Window size "+ $(window).width() + "px")
 //Event Handlers
 memeFile.change(function(event){
     event.preventDefault();
@@ -75,13 +73,7 @@ memeFile.change(function(event){
   fileButtonImage.mouseup(function(){
     $(this).css("top","0px");
   });
-  
-  $("#save").click(function(){
-    var image = memeCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    window.location.href = image;
-  });*/
-
-  
+  */
 
 //Primary Functions
 function setText(){
@@ -101,10 +93,8 @@ function setText(){
 
 function createThumbnail(img){
   if(!img) return false;
-   if(thumbnail){
-    thumbnail.remove();
-  }
-  //create new Image object since we can't modify the orginal one
+  $("#thumb").remove();
+
   var thumb = new Image();
   thumb.src = img.src;
   thumb.id = "thumb";
@@ -112,8 +102,7 @@ function createThumbnail(img){
   scaleImage(thumb,false,100)
  
   fileInputDiv.append(thumb);
-  thumbnail = thumb;
-}
+ }
 
 function setContextSettings(){
       
@@ -150,7 +139,7 @@ function createCanvas(img){
   memeCanvas.height = img.height;
   ctx.drawImage(img,0 ,0 ,img.width, img.height);
   setContextSettings();
-  $('#saveMessage').text("Right click on the image to save it or");
+  $('#saveMessage').text("Right click and save");
 }
 
 
