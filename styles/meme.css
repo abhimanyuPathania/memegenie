@@ -111,6 +111,30 @@ canvas{
 /*------------------------------------------------------*/
 
 /*MEDIA QUERIES*/
+
+@media screen and (max-width: 400px){
+	#upfile{
+		opacity: 1;
+		width: 100%;
+	}
+	body{
+		font-size: 15px;
+		margin:10px;
+	}
+	.error{
+		font-size: 0.85em;
+	}
+	#main{
+		padding: 0 20px;
+	}
+}
+
+@media screen and (max-width: 507px){
+	#title h1{
+		display: block;
+	}
+}
+
 @media screen and (max-width: 599px){
 	#thumb{
 		display: none;
@@ -121,32 +145,19 @@ canvas{
 	}
 }
 
+@media screen and (max-width: 699px){
+	body{
+		font-size: 18px;
+	}
+}
+
 @media screen and (min-width:600px){
 	#thumb{
 		display: inline;
 	}
 }
 
-@media screen and (max-width: 507px){
-	#title h1{
-		display: block;
-	}
-}
 
-@media screen and (max-width: 400px){
-	#upfile{
-		width: 100%;
-	}
-	body{
-		font-size: 15px;
-	}
-	.error{
-		font-size: 0.85em;
-	}
-}
 
-@media screen and (max-width: 699px){
-	body{
-		font-size: 18px;
-	}
-}
+
+

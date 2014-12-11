@@ -20,6 +20,7 @@ var imageResizeWidthLimit
 var imageResizeHeightLimit
 var imageResizeBlocker
 
+//alert("Window size "+ $(window).width() + "px")
 //Event Handlers
 memeFile.change(function(event){
     event.preventDefault();
@@ -61,7 +62,7 @@ memeFile.change(function(event){
   bottomText.keyup(function(){
     setText();
   });
-  
+
   //Simulate File button via Image
   fileButtonImage.click(function () {
       memeFile.trigger('click');
@@ -73,7 +74,14 @@ memeFile.change(function(event){
   
   fileButtonImage.mouseup(function(){
     $(this).css("top","0px");
+  });
+  
+  $("#save").click(function(){
+    var image = memeCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    window.location.href = image;
   });*/
+
+  
 
 //Primary Functions
 function setText(){
@@ -113,6 +121,10 @@ function setContextSettings(){
       ctx.strokeStyle = "black";
       ctx.font = "40px Impact";
       ctx.lineWidth = 2;
+     if($(window).width()<400){
+        ctx.font = "bolder 32px Impact";
+        ctx.lineWidth = 1;        
+      }
       ctx.textAlign = "center";
       
       maxWidth = (memeCanvas.width-30);
@@ -138,7 +150,7 @@ function createCanvas(img){
   memeCanvas.height = img.height;
   ctx.drawImage(img,0 ,0 ,img.width, img.height);
   setContextSettings();
-  $('#saveMessage').text("Right click on the image to save it...");
+  $('#saveMessage').text("Right click on the image to save it or");
 }
 
 
@@ -210,8 +222,6 @@ $(window).resize(function (){
         setText();//to fix image once before it returns
         return false;
       }
-      console.log("Scaling image")
-      console.log("main width: "+ width + "px")
       scaleImage(memeImage,expectedImageWidth,false)
       setText();
     }
