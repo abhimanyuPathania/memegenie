@@ -1,4 +1,5 @@
-// Globals
+
+(function(){
 
 var memeFile = $('#memeFile');
 var meme = $('#meme');
@@ -253,3 +254,5 @@ function scaleImage(img,requiredWidth,requiredHeight){
   }
   return false; 
 }
+
+}());
